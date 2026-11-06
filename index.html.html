@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Shwetuuu! ❤️ | Surprise from Yash</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        blush: '#ffe6ea',
+                        gold: '#d4af37',
+                        rosepink: '#ff85a1',
+                        deeprose: '#e63946',
+                        glass: 'rgba(255, 255, 255, 0.55)',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        cursive: ['Great Vibes', 'cursive'],
+                        sans: ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Base styles & Scrollbar */
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fff5f7 0%, #ffe6ea 50%, #f7d6e0 100%);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: #4a3b40;
+        }
+
+        /* Glassmorphism Classes */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 10px 30px -5px rgba(230, 57, 70, 0.1), 0 4px 15px 0 rgba(212, 175, 55, 0.08);
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        /* Ambient Canvas */
+        #ambient-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Audio Vinyl Spin */
+        .spinning {
+            animation: spin 4s linear infinite;
+        }
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Polaroid 3D Cards */
+        .polaroid-card {
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            transform-style: preserve-3d;
+        }
+        .polaroid-card:hover {
+            transform: translateY(-8px) rotate(1deg) scale(1.02);
+            box-shadow: 0 20px 35px -10px rgba(230, 57, 70, 0.2);
+        }
+
+        /* Photo Tape Pin Effect */
+        .photo-tape {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-2deg);
+            width: 80px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(4px);
+            border: 1px dashed rgba(212, 175, 55, 0.5);
+            z-index: 10;
+        }
+
+        /* 3D Flip Card */
+        .flip-card {
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1rem;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Dynamic Glow Animations */
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.4), 0 0 30px rgba(255, 133, 161, 0.3); }
+            50% { box-shadow: 0 0 25px rgba(212, 175, 55, 0.7), 0 0 45px rgba(255, 133, 161, 0.5); }
+        }
+        .pulse-glow {
+            animation: pulseGlow 3s infinite ease-in-out;
+        }
+
+        /* Candle Flame Flicker */
+        @keyframes flicker {
+            0%, 100% { transform: scale(1) rotate(-1deg); opacity: 0.9; }
+            25% { transform: scale(1.15) rotate(2deg); opacity: 1; }
+            50% { transform: scale(0.95) rotate(-2deg); opacity: 0.8; }
+            75% { transform: scale(1.05) rotate(1deg); opacity: 0.95; }
+        }
+        .flame {
+            animation: flicker 0.8s infinite ease-in-out;
+            transform-origin: center bottom;
+            filter: drop-shadow(0 0 8px #ffb703) drop-shadow(0 0 15px #fb8500);
+        }
+
+        /* Coupon Explosion Heart Animation */
+        @keyframes heartPop {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+        .heart-pop {
+            position: absolute;
+            pointer-events: none;
+            animation: heartPop 0.8s ease-out forwards;
+        }
+
+        /* Tab Transition */
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="relative">
+
+    <!-- Ambient Heart & Sparkle Particle Canvas -->
+    <canvas id="ambient-canvas"></canvas>
+
+    <!-- Native HTML5 Audio Element -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="Alfaaz - Hamza Malik, Zain Ali _ Lyrics.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Floating Top Bar / Navigation -->
+    <header class="fixed top-0 left-0 w-full z-50 glass-nav shadow-sm px-4 py-3">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            
+            <!-- Logo / Signature -->
+            <div class="flex items-center space-x-2">
+                <span class="font-cursive text-3xl font-bold text-rosepink tracking-wider">Shwetuuu & Yash</span>
+                <span class="text-xs bg-gold/20 text-gold font-medium px-2 py-0.5 rounded-full border border-gold/30 hidden sm:inline-block">Forever & Always</span>
+            </div>
+
+            <!-- Page Navigation Tabs -->
+            <nav class="flex items-center space-x-1 sm:space-x-2 bg-white/40 p-1 rounded-full border border-white/60">
+                <button id="nav-btn-1" onclick="switchTab(1)" class="px-3 sm:px-5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 bg-rosepink text-white shadow-md">
+                    <i class="fa-solid font-normal fa-heart mr-1.5"></i> Memory Lane
+                </button>
+                <button id="nav-btn-2" onclick="switchTab(2)" class="px-3 sm:px-5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 text-gray-700 hover:text-rosepink">
+                    <i class="fa-solid font-normal fa-timeline mr-1.5"></i> Our Love Journey
+                </button>
+            </nav>
+
+            <!-- Sleek Vinyl Music Toggle Button -->
+            <button id="music-toggle" onclick="toggleAudio()" class="relative flex items-center justify-center w-10 h-10 rounded-full bg-white/80 border border-gold/40 shadow-lg text-rosepink hover:scale-105 transition-transform" title="Toggle Music">
+                <div id="vinyl-icon" class="w-7 h-7 rounded-full bg-stone-900 border-2 border-gold flex items-center justify-center">
+                    <div class="w-2 h-2 rounded-full bg-rosepink"></div>
+                </div>
+                <span id="music-indicator" class="absolute -top-1 -right-1 flex h-3 w-3">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rosepink opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-rosepink"></span>
+                </span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="relative z-10 pt-24 pb-16 px-4 max-w-6xl mx-auto">
+
+        <!-- ================= PAGE 1: MEMORY LANE ================= -->
+        <section id="page-1" class="tab-content active space-y-16">
+
+            <!-- Hero Section & Birthday Countdown -->
+            <div class="text-center space-y-6 pt-4">
+                <div class="inline-block animate-bounce text-4xl mb-2">👑💖🎂</div>
+                <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-bold text-gray-800 tracking-tight">
+                    Happy Birthday <span class="font-cursive text-5xl sm:text-7xl md:text-8xl text-rosepink drop-shadow-sm">Shwetuuu!</span> ❤️
+                </h1>
+                
+                <!-- Dynamic Quote Subtitle -->
+                <div class="h-10 flex items-center justify-center">
+                    <p id="quote-carousel" class="font-serif italic text-lg sm:text-xl text-gray-600 transition-opacity duration-500">
+                        "A romantic surprise crafted with love from Yash..."
+                    </p>
+                </div>
+
+                <!-- Countdown Timer Card -->
+                <div class="max-w-2xl mx-auto glass-card rounded-3xl p-6 sm:p-8 pulse-glow border border-white/80">
+                    <h3 class="text-xs uppercase tracking-widest text-gold font-bold mb-4">Countdown to Your Special Day (Nov 16, 2026)</h3>
+                    <div class="grid grid-cols-4 gap-2 sm:gap-4 text-center">
+                        <div class="bg-white/60 rounded-2xl p-3 border border-pink-100">
+                            <span id="cd-days" class="block font-serif text-2xl sm:text-4xl font-bold text-rosepink">00</span>
+                            <span class="text-xs text-gray-500 font-medium">Days</span>
+                        </div>
+                        <div class="bg-white/60 rounded-2xl p-3 border border-pink-100">
+                            <span id="cd-hours" class="block font-serif text-2xl sm:text-4xl font-bold text-rosepink">00</span>
+                            <span class="text-xs text-gray-500 font-medium">Hours</span>
+                        </div>
+                        <div class="bg-white/60 rounded-2xl p-3 border border-pink-100">
+                            <span id="cd-minutes" class="block font-serif text-2xl sm:text-4xl font-bold text-rosepink">00</span>
+                            <span class="text-xs text-gray-500 font-medium">Minutes</span>
+                        </div>
+                        <div class="bg-white/60 rounded-2xl p-3 border border-pink-100">
+                            <span id="cd-seconds" class="block font-serif text-2xl sm:text-4xl font-bold text-rosepink">00</span>
+                            <span class="text-xs text-gray-500 font-medium">Seconds</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5 Polaroid Photo Gallery Grid -->
+            <div class="space-y-6">
+                <div class="text-center">
+                    <h2 class="font-serif text-3xl font-bold text-gray-800">Our Favorite Snapshots</h2>
+                    <p class="text-sm text-gray-500">Click the camera icon on any card to upload your real memory photos!</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 pt-4">
+                    
+                    <!-- Polaroid 1 -->
+                    <div class="polaroid-card relative bg-white p-4 pb-6 rounded-sm shadow-lg border border-gray-100 flex flex-col justify-between">
+                        <div class="photo-tape"></div>
+                        <div class="relative w-full h-64 bg-pink-50 rounded overflow-hidden flex items-center justify-center group">
+                            <img id="img-preview-1" src="https://placehold.co/600x600/ffe6ea/ff85a1?text=Our+First+Date+❤️" alt="First Date" class="w-full h-full object-cover">
+                            <label for="img-input-1" class="absolute bottom-3 right-3 w-10 h-10 bg-white/80 backdrop-blur rounded-full flex items-center justify-center shadow cursor-pointer hover:bg-rosepink hover:text-white transition-colors">
+                                <i class="fa-solid fa-camera text-sm"></i>
+                                <input type="file" id="img-input-1" accept="image/*" class="hidden" onchange="handleImageUpload(event, 'img-preview-1')">
+                            </label>
+                        </div>
+                        <div class="mt-4 text-center font-cursive text-2xl text-gray-700">
+                            Where It All Began
+                            <span class="block font-sans text-xs text-rosepink font-normal tracking-wide">Our First Date</span>
+                        </div>
+                    </div>
+
+                    <!-- Polaroid 2 -->
+                    <div class="polaroid-card relative bg-white p-4 pb-6 rounded-sm shadow-lg border border-gray-100 flex flex-col justify-between">
+                        <div class="photo-tape"></div>
+                        <div class="relative w-full h-64 bg-pink-50 rounded overflow-hidden flex items-center justify-center group">
+                            <img id="img-preview-2" src="https://placehold.co/600x600/ffe6ea/d4af37?text=First+Movie+Date+🍿" alt="Movie Date" class="w-full h-full object-cover">
+                            <label for="img-input-2" class="absolute bottom-3 right-3 w-10 h-10 bg-white/80 backdrop-blur rounded-full flex items-center justify-center shadow cursor-pointer hover:bg-rosepink hover:text-white transition-colors">
+                                <i class="fa-solid fa-camera text-sm"></i>
+                                <input type="file" id="img-input-2" accept="image/*" class="hidden" onchange="handleImageUpload(event, 'img-preview-2')">
+                            </label>
+                        </div>
+                        <div class="mt-4 text-center font-cursive text-2xl text-gray-700">
+                            Popcorn & Late Night Whispers
+                            <span class="block font-sans text-xs text-gold font-semibold tracking-wide">First Movie Date • Apr 18, 2025</span>
+                        </div>
+                    </div>
+
+                    <!-- Polaroid 3 -->
+                    <div class="polaroid-card relative bg-white p-4 pb-6 rounded-sm shadow-lg border border-gray-100 flex flex-col justify-between">
+                        <div class="photo-tape"></div>
+                        <div class="relative w-full h-64 bg-pink-50 rounded overflow-hidden flex items-center justify-center group">
+                            <img id="img-preview-3" src="https://placehold.co/600x600/ffe6ea/ff85a1?text=Our+First+Kiss+💋" alt="First Kiss" class="w-full h-full object-cover">
+                            <label for="img-input-3" class="absolute bottom-3 right-3 w-10 h-10 bg-white/80 backdrop-blur rounded-full flex items-center justify-center shadow cursor-pointer hover:bg-rosepink hover:text-white transition-colors">
+                                <i class="fa-solid fa-camera text-sm"></i>
+                                <input type="file" id="img-input-3" accept="image/*" class="hidden" onchange="handleImageUpload(event, 'img-preview-3')">
+                            </label>
+                        </div>
+                        <div class="mt-4 text-center font-cursive text-2xl text-gray-700">
+                            A Moment Frozen in Time
+                            <span class="block font-sans text-xs text-rosepink font-normal tracking-wide">Our First Kiss</span>
+                        </div>
+                    </div>
+
+                    <!-- Polaroid 4 -->
+                    <div class="polaroid-card relative bg-white p-4 pb-6 rounded-sm shadow-lg border border-gray-100 flex flex-col justify-between">
+                        <div class="photo-tape"></div>
+                        <div class="relative w-full h-64 bg-pink-50 rounded overflow-hidden flex items-center justify-center group">
+                            <img id="img-preview-4" src="https://placehold.co/600x600/ffe6ea/d4af37?text=River+Rafting+🛶" alt="River Rafting" class="w-full h-full object-cover">
+                            <label for="img-input-4" class="absolute bottom-3 right-3 w-10 h-10 bg-white/80 backdrop-blur rounded-full flex items-center justify-center shadow cursor-pointer hover:bg-rosepink hover:text-white transition-colors">
+                                <i class="fa-solid fa-camera text-sm"></i>
+                                <input type="file" id="img-input-4" accept="image/*" class="hidden" onchange="handleImageUpload(event, 'img-preview-4')">
+                            </label>
+                        </div>
+                        <div class="mt-4 text-center font-cursive text-2xl text-gray-700">
+                            Riding Life's Waves
+                            <span class="block font-sans text-xs text-rosepink font-normal tracking-wide">River Rafting Adventure</span>
+                        </div>
+                    </div>
+
+                    <!-- Polaroid 5 (Centerpiece Featured) -->
+                    <div class="polaroid-card relative bg-white p-4 pb-6 rounded-sm shadow-xl border-2 border-gold/40 flex flex-col justify-between sm:col-span-2 lg:col-span-1 ring-4 ring-gold/20">
+                        <div class="absolute -top-4 right-4 z-20 text-2xl text-gold drop-shadow">⭐</div>
+                        <div class="photo-tape"></div>
+                        <div class="relative w-full h-64 bg-amber-50 rounded overflow-hidden flex items-center justify-center group">
+                            <img id="img-preview-5" src="https://placehold.co/600x600/fff3b0/d4af37?text=Our+Absolute+Favorite+❤️" alt="Favorite Picture" class="w-full h-full object-cover">
+                            <label for="img-input-5" class="absolute bottom-3 right-3 w-10 h-10 bg-white/80 backdrop-blur rounded-full flex items-center justify-center shadow cursor-pointer hover:bg-gold hover:text-white transition-colors">
+                                <i class="fa-solid fa-camera text-sm"></i>
+                                <input type="file" id="img-input-5" accept="image/*" class="hidden" onchange="handleImageUpload(event, 'img-preview-5')">
+                            </label>
+                        </div>
+                        <div class="mt-4 text-center font-cursive text-3xl text-rosepink font-bold">
+                            Our Absolute Favorite Picture ❤️
+                            <span class="block font-sans text-xs text-gold font-semibold tracking-wider uppercase mt-1">Special Centerpiece</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Evasive Mini-Game Section -->
+            <div class="glass-card rounded-3xl p-8 max-w-3xl mx-auto text-center space-y-8 relative overflow-hidden border border-white">
+                <div class="space-y-2">
+                    <span class="text-xs uppercase font-bold tracking-widest text-gold">Interactive Birthday Question</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-bold text-gray-800">
+                        Kya mere saath humesha rehna chahte ho?? 💖
+                    </h2>
+                    <p class="text-xs text-gray-500">Answer truthfully to unlock Yash's secret love letter!</p>
+                </div>
+
+                <!-- Game Container for Relative Evasive Dodge -->
+                <div id="game-container" class="relative h-44 w-full flex items-center justify-center gap-6 overflow-hidden rounded-2xl bg-white/30 border border-white/50 p-4">
+                    
+                    <!-- Yes Button (Scales up) -->
+                    <button id="yes-btn" onclick="triggerVictory()" class="px-8 py-4 bg-gradient-to-r from-rosepink to-deeprose text-white font-bold rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 z-20 flex items-center gap-2">
+                        <span>Yes! 💖</span>
+                    </button>
+
+                    <!-- Evasive No Button -->
+                    <button id="no-btn" class="px-8 py-4 bg-stone-200 text-stone-700 font-semibold rounded-full shadow transition-all duration-200 z-20 absolute">
+                        No 🙈
+                    </button>
+                </div>
+            </div>
+
+            <!-- Secret Gift Box & Love Letter Section (Hidden until Yes is clicked) -->
+            <div id="secret-section" class="hidden space-y-12 transition-all duration-700 transform translate-y-6">
+                
+                <!-- Unlocked Banner -->
+                <div class="text-center space-y-2">
+                    <span class="inline-block px-4 py-1 bg-gold/20 text-gold rounded-full text-xs font-bold uppercase tracking-widest border border-gold/40">
+                        🎉 Secret Unlocked!
+                    </span>
+                    <h2 class="font-serif text-4xl font-bold text-gray-800">A Letter & Gifts For My Queen</h2>
+                </div>
+
+                <!-- Love Letter Glassmorphism Card -->
+                <div class="glass-card rounded-3xl p-8 sm:p-12 max-w-3xl mx-auto border-2 border-pink-200 relative shadow-2xl">
+                    <div class="absolute top-6 right-6 text-4xl opacity-20">📜</div>
+                    <h3 class="font-cursive text-4xl text-rosepink mb-6">Dearest Shwetuuu,</h3>
+                    <div class="space-y-4 font-serif text-gray-700 leading-relaxed text-base sm:text-lg">
+                        <p>
+                            From the very first moment our paths crossed on March 12, 2025, my world changed in ways I could never have imagined. Your laugh became my favorite melody, and your happiness became my life's mission.
+                        </p>
+                        <p>
+                            Every late-night conversation, every shared smile over popcorn during our movie dates, and every wave we rode together has built a love story I am immensely proud of. You are my best friend, my safest haven, and my favorite adventure.
+                        </p>
+                        <p>
+                            On your birthday, I want to promise you a lifetime of holding your hand through every high and low, endless warm hugs, and loving you more with every single passing second.
+                        </p>
+                    </div>
+                    <div class="mt-8 text-right font-cursive text-3xl text-rosepink font-bold">
+                        Forever Yours, Yash ❤️
+                    </div>
+                </div>
+
+                <!-- Redeemable Love Coupons Grid -->
+                <div class="space-y-4 max-w-4xl mx-auto">
+                    <h3 class="font-serif text-2xl font-bold text-center text-gray-800">Redeemable Birthday Love Coupons</h3>
+                    <p class="text-xs text-center text-gray-500">Click on any coupon to redeem it with Yash right now!</p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                        
+                        <!-- Coupon 1 -->
+                        <div onclick="redeemCoupon(this)" class="coupon-card glass-card p-6 rounded-2xl border border-rosepink/30 flex items-center justify-between cursor-pointer hover:border-rosepink transition-all duration-300 relative overflow-hidden group">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 rounded-full bg-rosepink/20 flex items-center justify-center text-rosepink text-xl">
+                                    🍦
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 text-sm">Late Night Ice Cream Drive</h4>
+                                    <p class="text-xs text-gray-500">Valid for any ice cream craving at midnight</p>
+                                </div>
+                            </div>
+                            <span class="coupon-status text-xs font-bold bg-rosepink/10 text-rosepink px-3 py-1.5 rounded-full border border-rosepink/30">REDEEM</span>
+                        </div>
+
+                        <!-- Coupon 2 -->
+                        <div onclick="redeemCoupon(this)" class="coupon-card glass-card p-6 rounded-2xl border border-rosepink/30 flex items-center justify-between cursor-pointer hover:border-rosepink transition-all duration-300 relative overflow-hidden group">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center text-gold text-xl">
+                                    👑
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 text-sm">Victory in Any Argument</h4>
+                                    <p class="text-xs text-gray-500">Instant win card! Yash agrees with you immediately</p>
+                                </div>
+                            </div>
+                            <span class="coupon-status text-xs font-bold bg-gold/20 text-gold px-3 py-1.5 rounded-full border border-gold/40">REDEEM</span>
+                        </div>
+
+                        <!-- Coupon 3 -->
+                        <div onclick="redeemCoupon(this)" class="coupon-card glass-card p-6 rounded-2xl border border-rosepink/30 flex items-center justify-between cursor-pointer hover:border-rosepink transition-all duration-300 relative overflow-hidden group">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 rounded-full bg-rosepink/20 flex items-center justify-center text-rosepink text-xl">
+                                    🤗
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 text-sm">Unlimited Hugs & Kisses</h4>
+                                    <p class="text-xs text-gray-500">Claimable 24/7 with zero expiration</p>
+                                </div>
+                            </div>
+                            <span class="coupon-status text-xs font-bold bg-rosepink/10 text-rosepink px-3 py-1.5 rounded-full border border-rosepink/30">REDEEM</span>
+                        </div>
+
+                        <!-- Coupon 4 -->
+                        <div onclick="redeemCoupon(this)" class="coupon-card glass-card p-6 rounded-2xl border border-rosepink/30 flex items-center justify-between cursor-pointer hover:border-rosepink transition-all duration-300 relative overflow-hidden group">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center text-gold text-xl">
+                                    🎬
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 text-sm">Movie Marathon Night</h4>
+                                    <p class="text-xs text-gray-500">Your choice of movies + favorite snacks provided</p>
+                                </div>
+                            </div>
+                            <span class="coupon-status text-xs font-bold bg-gold/20 text-gold px-3 py-1.5 rounded-full border border-gold/40">REDEEM</span>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ================= PAGE 2: OUR LOVE JOURNEY ================= -->
+        <section id="page-2" class="tab-content space-y-16">
+
+            <!-- Togetherness Counter Header -->
+            <div class="text-center space-y-4">
+                <span class="px-4 py-1 bg-rosepink/10 text-rosepink rounded-full text-xs font-bold uppercase tracking-widest border border-rosepink/20">
+                    Our Love Story
+                </span>
+                <h1 class="font-serif text-4xl sm:text-5xl font-bold text-gray-800">
+                    Together Since March 12, 2025
+                </h1>
+                <p class="text-sm text-gray-600 max-w-md mx-auto">
+                    Every second spent with you is my absolute favorite memory. Here is how long our hearts have been beat as one:
+                </p>
+
+                <!-- Live Togetherness Counter -->
+                <div class="max-w-3xl mx-auto glass-card rounded-3xl p-6 sm:p-8 border border-white/80 shadow-xl">
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                        <div class="bg-white/70 p-4 rounded-2xl border border-pink-100">
+                            <span id="tog-days" class="font-serif text-3xl sm:text-5xl font-bold text-rosepink">0</span>
+                            <span class="block text-xs uppercase font-semibold text-gray-500 mt-1">Days</span>
+                        </div>
+                        <div class="bg-white/70 p-4 rounded-2xl border border-pink-100">
+                            <span id="tog-hours" class="font-serif text-3xl sm:text-5xl font-bold text-rosepink">0</span>
+                            <span class="block text-xs uppercase font-semibold text-gray-500 mt-1">Hours</span>
+                        </div>
+                        <div class="bg-white/70 p-4 rounded-2xl border border-pink-100">
+                            <span id="tog-minutes" class="font-serif text-3xl sm:text-5xl font-bold text-rosepink">0</span>
+                            <span class="block text-xs uppercase font-semibold text-gray-500 mt-1">Minutes</span>
+                        </div>
+                        <div class="bg-white/70 p-4 rounded-2xl border border-pink-100">
+                            <span id="tog-seconds" class="font-serif text-3xl sm:text-5xl font-bold text-rosepink">0</span>
+                            <span class="block text-xs uppercase font-semibold text-gray-500 mt-1">Seconds</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive 3D Birthday Cake ("Make a Wish") -->
+            <div class="glass-card rounded-3xl p-8 max-w-2xl mx-auto text-center space-y-6 border border-white relative overflow-hidden">
+                <div class="space-y-1">
+                    <h2 class="font-serif text-3xl font-bold text-gray-800">Make a Birthday Wish! 🎂</h2>
+                    <p class="text-xs text-gray-500">Tap or click the glowing candle flames to blow them out!</p>
+                </div>
+
+                <!-- 3D Rendered CSS Cake -->
+                <div class="py-8 flex justify-center items-center">
+                    <div class="relative w-56 h-48 flex flex-col items-center justify-end">
+                        
+                        <!-- Candles Container -->
+                        <div class="absolute top-2 flex space-x-6 z-20">
+                            <!-- Candle 1 -->
+                            <div onclick="blowCandle(this)" class="candle flex flex-col items-center cursor-pointer group">
+                                <div class="flame w-4 h-6 bg-gradient-to-t from-amber-500 via-yellow-300 to-white rounded-full"></div>
+                                <div class="w-2.5 h-10 bg-gradient-to-b from-rosepink to-pink-300 rounded-t-sm shadow"></div>
+                            </div>
+                            <!-- Candle 2 -->
+                            <div onclick="blowCandle(this)" class="candle flex flex-col items-center cursor-pointer group">
+                                <div class="flame w-4 h-6 bg-gradient-to-t from-amber-500 via-yellow-300 to-white rounded-full"></div>
+                                <div class="w-2.5 h-12 bg-gradient-to-b from-gold to-yellow-200 rounded-t-sm shadow"></div>
+                            </div>
+                            <!-- Candle 3 -->
+                            <div onclick="blowCandle(this)" class="candle flex flex-col items-center cursor-pointer group">
+                                <div class="flame w-4 h-6 bg-gradient-to-t from-amber-500 via-yellow-300 to-white rounded-full"></div>
+                                <div class="w-2.5 h-10 bg-gradient-to-b from-rosepink to-pink-300 rounded-t-sm shadow"></div>
+                            </div>
+                        </div>
+
+                        <!-- Cake Top Layer -->
+                        <div class="w-40 h-16 bg-gradient-to-r from-pink-200 via-rosepink to-pink-200 rounded-t-3xl border-b-4 border-white shadow-inner relative z-10 flex items-center justify-center">
+                            <div class="w-full h-3 bg-white/40 absolute top-3 rounded-full"></div>
+                        </div>
+
+                        <!-- Cake Bottom Layer -->
+                        <div class="w-56 h-20 bg-gradient-to-r from-pink-300 via-rose-400 to-pink-300 rounded-b-2xl shadow-2xl relative flex items-center justify-center">
+                            <div class="w-full h-4 bg-white/30 absolute top-4"></div>
+                            <span class="font-cursive text-2xl text-white font-bold drop-shadow">Happy Birthday Shwetuuu</span>
+                        </div>
+
+                        <!-- Cake Plate -->
+                        <div class="w-64 h-4 bg-stone-200 rounded-full shadow-md border-t border-white"></div>
+                    </div>
+                </div>
+
+                <div id="wish-status" class="text-xs font-semibold text-rosepink h-4">
+                    Candles are glowing bright! Make your wish...
+                </div>
+            </div>
+
+            <!-- 3D Flip Cards: "Reasons Why I Love You" -->
+            <div class="space-y-6">
+                <div class="text-center">
+                    <h2 class="font-serif text-3xl font-bold text-gray-800">Reasons Why I Love You</h2>
+                    <p class="text-xs text-gray-500">Click any card to flip and reveal a secret reason</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                    
+                    <!-- Flip Card 1 -->
+                    <div class="flip-card h-48" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-center border border-white shadow-md">
+                                <span class="text-3xl mb-2">✨</span>
+                                <h3 class="font-serif font-bold text-lg text-gray-800">Reason #1</h3>
+                                <p class="text-xs text-rosepink font-semibold">Click to reveal</p>
+                            </div>
+                            <div class="flip-card-back bg-gradient-to-br from-rosepink to-deeprose text-white p-6 flex items-center justify-center text-center font-serif text-sm shadow-xl">
+                                Your gorgeous smile can brighten up even my darkest and most stressful days.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Flip Card 2 -->
+                    <div class="flip-card h-48" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-center border border-white shadow-md">
+                                <span class="text-3xl mb-2">🤗</span>
+                                <h3 class="font-serif font-bold text-lg text-gray-800">Reason #2</h3>
+                                <p class="text-xs text-rosepink font-semibold">Click to reveal</p>
+                            </div>
+                            <div class="flip-card-back bg-gradient-to-br from-gold to-amber-600 text-white p-6 flex items-center justify-center text-center font-serif text-sm shadow-xl">
+                                The comforting way you listen and make me feel like the most important person in the room.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Flip Card 3 -->
+                    <div class="flip-card h-48" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-center border border-white shadow-md">
+                                <span class="text-3xl mb-2">🛶</span>
+                                <h3 class="font-serif font-bold text-lg text-gray-800">Reason #3</h3>
+                                <p class="text-xs text-rosepink font-semibold">Click to reveal</p>
+                            </div>
+                            <div class="flip-card-back bg-gradient-to-br from-rosepink to-deeprose text-white p-6 flex items-center justify-center text-center font-serif text-sm shadow-xl">
+                                Your adventurous spirit—whether we are rafting on rivers or trying new food together!
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Flip Card 4 -->
+                    <div class="flip-card h-48" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-center border border-white shadow-md">
+                                <span class="text-3xl mb-2">🍿</span>
+                                <h3 class="font-serif font-bold text-lg text-gray-800">Reason #4</h3>
+                                <p class="text-xs text-rosepink font-semibold">Click to reveal</p>
+                            </div>
+                            <div class="flip-card-back bg-gradient-to-br from-gold to-amber-600 text-white p-6 flex items-center justify-center text-center font-serif text-sm shadow-xl">
+                                How cozy late-night movie dates feel when you are leaning right next to me.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Flip Card 5 -->
+                    <div class="flip-card h-48" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-center border border-white shadow-md">
+                                <span class="text-3xl mb-2">💖</span>
+                                <h3 class="font-serif font-bold text-lg text-gray-800">Reason #5</h3>
+                                <p class="text-xs text-rosepink font-semibold">Click to reveal</p>
+                            </div>
+                            <div class="flip-card-back bg-gradient-to-br from-rosepink to-deeprose text-white p-6 flex items-center justify-center text-center font-serif text-sm shadow-xl">
+                                Your pure heart, unmatched kindness, and how deeply you care for the people you love.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Flip Card 6 -->
+                    <div class="flip-card h-48" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front glass-card p-6 flex flex-col items-center justify-center border border-white shadow-md">
+                                <span class="text-3xl mb-2">👑</span>
+                                <h3 class="font-serif font-bold text-lg text-gray-800">Reason #6</h3>
+                                <p class="text-xs text-rosepink font-semibold">Click to reveal</p>
+                            </div>
+                            <div class="flip-card-back bg-gradient-to-br from-gold to-amber-600 text-white p-6 flex items-center justify-center text-center font-serif text-sm shadow-xl">
+                                Simply because you are YOU—my queen, my happiness, and my entire heart forever.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Love Story Timeline -->
+            <div class="space-y-8 max-w-3xl mx-auto">
+                <div class="text-center">
+                    <h2 class="font-serif text-3xl font-bold text-gray-800">Our Story Milestones</h2>
+                    <p class="text-xs text-gray-500">Tracking our beautiful journey into forever</p>
+                </div>
+
+                <div class="relative border-l-2 border-rosepink/40 ml-4 sm:ml-32 space-y-8 py-4">
+                    
+                    <!-- Timeline Item 1 -->
+                    <div class="relative pl-6 sm:pl-8 group">
+                        <div class="absolute -left-2.5 top-1.5 w-5 h-5 rounded-full bg-rosepink border-4 border-white shadow"></div>
+                        <span class="sm:absolute sm:-left-32 sm:top-1 font-serif font-bold text-sm text-rosepink">March 12, 2025</span>
+                        <div class="glass-card p-4 rounded-xl border border-white shadow-sm mt-1 sm:mt-0">
+                            <h4 class="font-bold text-gray-800 text-base">The Spark That Started It All</h4>
+                            <p class="text-xs text-gray-600 mt-1">Yash & Shwetuuu officially began their beautiful journey together. ❤️</p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 2 -->
+                    <div class="relative pl-6 sm:pl-8 group">
+                        <div class="absolute -left-2.5 top-1.5 w-5 h-5 rounded-full bg-gold border-4 border-white shadow"></div>
+                        <span class="sm:absolute sm:-left-32 sm:top-1 font-serif font-bold text-sm text-gold">April 18, 2025</span>
+                        <div class="glass-card p-4 rounded-xl border border-white shadow-sm mt-1 sm:mt-0">
+                            <h4 class="font-bold text-gray-800 text-base">Popcorn & Late Night Whispers</h4>
+                            <p class="text-xs text-gray-600 mt-1">Our memorable first official movie date filled with laughter and shared snacks.</p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 3 -->
+                    <div class="relative pl-6 sm:pl-8 group">
+                        <div class="absolute -left-2.5 top-1.5 w-5 h-5 rounded-full bg-rosepink border-4 border-white shadow"></div>
+                        <span class="sm:absolute sm:-left-32 sm:top-1 font-serif font-bold text-sm text-rosepink">Summer Adventure</span>
+                        <div class="glass-card p-4 rounded-xl border border-white shadow-sm mt-1 sm:mt-0">
+                            <h4 class="font-bold text-gray-800 text-base">Riding Life's Waves</h4>
+                            <p class="text-xs text-gray-600 mt-1">River rafting trip where we conquered the rapid waters together.</p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 4 -->
+                    <div class="relative pl-6 sm:pl-8 group">
+                        <div class="absolute -left-2.5 top-1.5 w-5 h-5 rounded-full bg-gold border-4 border-white shadow"></div>
+                        <span class="sm:absolute sm:-left-32 sm:top-1 font-serif font-bold text-sm text-gold">Nov 16, 2026</span>
+                        <div class="glass-card p-4 rounded-xl border border-white shadow-sm mt-1 sm:mt-0">
+                            <h4 class="font-bold text-gray-800 text-base">Happy Birthday Queen Shwetuuu! 👑</h4>
+                            <p class="text-xs text-gray-600 mt-1">Celebrating another year of your magical existence and our growing love.</p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 5 (Future) -->
+                    <div class="relative pl-6 sm:pl-8 group">
+                        <div class="absolute -left-2.5 top-1.5 w-5 h-5 rounded-full bg-rosepink border-4 border-white shadow animate-pulse"></div>
+                        <span class="sm:absolute sm:-left-32 sm:top-1 font-serif font-bold text-sm text-rosepink">Forever</span>
+                        <div class="glass-card p-4 rounded-xl border border-white shadow-sm mt-1 sm:mt-0">
+                            <h4 class="font-bold text-gray-800 text-base">Infinite Memories Ahead</h4>
+                            <p class="text-xs text-gray-600 mt-1">Countless dates, trips, hugs, and smiles waiting for us in the future!</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Wish Pop-up Modal -->
+    <div id="wish-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-card bg-white/90 max-w-md w-full rounded-3xl p-6 text-center space-y-4 border-2 border-gold shadow-2xl transform transition-all scale-95 opacity-0" id="wish-modal-content">
+            <div class="text-5xl">✨🎂💖</div>
+            <h3 class="font-serif text-2xl font-bold text-gray-800">Your Birthday Wish Has Been Made!</h3>
+            <p class="text-sm text-gray-600">
+                May every dream you hold close to your heart come true this year, my queen. Yash is right beside you to make all of them reality!
+            </p>
+            <button onclick="closeWishModal()" class="px-6 py-2.5 bg-rosepink text-white font-bold rounded-full text-xs uppercase tracking-wider shadow hover:bg-deeprose transition-colors">
+                Close & Keep Celebrating ❤️
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        /* ================= 1. AUDIO & MUSIC CONTROLLER ================= */
+        const audio = document.getElementById('bg-music');
+        const musicToggle = document.getElementById('music-toggle');
+        const vinylIcon = document.getElementById('vinyl-icon');
+        const musicIndicator = document.getElementById('music-indicator');
+
+        let audioInitialized = false;
+        const TARGET_START_TIME = 45; // 0:45 timestamp requirement
+
+        // Initialize Audio starting at 0:45
+        function initAudioPlayback() {
+            if (audioInitialized) return;
+            audio.currentTime = TARGET_START_TIME;
+            audio.play().then(() => {
+                audioInitialized = true;
+                updateMusicUI(true);
+            }).catch(() => {
+                // Autoplay blocked by browser policy
+                updateMusicUI(false);
+            });
+        }
+
+        // Global Invisible Interaction Fallback
+        function globalInteractionHandler() {
+            if (!audioInitialized) {
+                initAudioPlayback();
+            }
+        }
+        window.addEventListener('click', globalInteractionHandler, { once: true });
+        window.addEventListener('touchstart', globalInteractionHandler, { once: true });
+        window.addEventListener('scroll', globalInteractionHandler, { once: true });
+
+        // Toggle Audio Play/Pause
+        function toggleAudio() {
+            if (audio.paused) {
+                if (audio.currentTime < TARGET_START_TIME) {
+                    audio.currentTime = TARGET_START_TIME;
+                }
+                audio.play();
+                audioInitialized = true;
+                updateMusicUI(true);
+            } else {
+                audio.pause();
+                updateMusicUI(false);
+            }
+        }
+
+        function updateMusicUI(isPlaying) {
+            if (isPlaying) {
+                vinylIcon.classList.add('spinning');
+                musicIndicator.classList.remove('hidden');
+            } else {
+                vinylIcon.classList.remove('spinning');
+                musicIndicator.classList.add('hidden');
+            }
+        }
+
+        /* ================= 2. AMBIENT PARTICLES CANVAS ================= */
+        const canvas = document.getElementById('ambient-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * 100;
+                this.size = Math.random() * 14 + 8;
+                this.speedY = Math.random() * 1.2 + 0.5;
+                this.speedX = Math.sin(Math.random() * Math.PI) * 0.8;
+                this.opacity = Math.random() * 0.5 + 0.3;
+                this.type = Math.random() > 0.4 ? 'heart' : 'sparkle';
+                this.color = Math.random() > 0.5 ? '#ff85a1' : '#d4af37';
+            }
+            update() {
+                this.y -= this.speedY;
+                this.x += this.speedX;
+                if (this.y < -20) {
+                    this.reset();
+                }
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = this.color;
+                if (this.type === 'heart') {
+                    // Draw Heart Particle
+                    ctx.font = `${this.size}px serif`;
+                    ctx.fillText('❤️', this.x, this.y);
+                } else {
+                    // Draw Gold Sparkle Particle
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size / 4, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.restore();
+            }
+        }
+
+        for (let i = 0; i < 35; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+
+        /* ================= 3. NAVIGATION TAB SWITCHING ================= */
+        function switchTab(tabIndex) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            
+            const btn1 = document.getElementById('nav-btn-1');
+            const btn2 = document.getElementById('nav-btn-2');
+
+            if (tabIndex === 1) {
+                document.getElementById('page-1').classList.add('active');
+                btn1.className = "px-3 sm:px-5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 bg-rosepink text-white shadow-md";
+                btn2.className = "px-3 sm:px-5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 text-gray-700 hover:text-rosepink";
+            } else {
+                document.getElementById('page-2').classList.add('active');
+                btn2.className = "px-3 sm:px-5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 bg-rosepink text-white shadow-md";
+                btn1.className = "px-3 sm:px-5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 text-gray-700 hover:text-rosepink";
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* ================= 4. QUOTE CAROUSEL ================= */
+        const quotes = [
+            '"A romantic surprise crafted with love from Yash..."',
+            '"You are my favorite thought, every single day."',
+            '"Holding your hand is my absolute favorite thing to do."',
+            '"With you, every day feels like a dream worth living."'
+        ];
+        let quoteIdx = 0;
+        const quoteElem = document.getElementById('quote-carousel');
+        setInterval(() => {
+            quoteElem.style.opacity = '0';
+            setTimeout(() => {
+                quoteIdx = (quoteIdx + 1) % quotes.length;
+                quoteElem.innerText = quotes[quoteIdx];
+                quoteElem.style.opacity = '1';
+            }, 500);
+        }, 4000);
+
+        /* ================= 5. TIMERS (BIRTHDAY COUNTDOWN & TOGETHERNESS) ================= */
+        const targetBirthday = new Date('November 16, 2026 00:00:00').getTime();
+        const relationshipStart = new Date('March 12, 2025 00:00:00').getTime();
+
+        function updateTimers() {
+            const now = new Date().getTime();
+
+            // Birthday Countdown Calculation
+            const distance = targetBirthday - now;
+            if (distance > 0) {
+                document.getElementById('cd-days').innerText = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
+                document.getElementById('cd-hours').innerText = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+                document.getElementById('cd-minutes').innerText = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+                document.getElementById('cd-seconds').innerText = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
+            }
+
+            // Togetherness Counter Calculation
+            const togetherTime = now - relationshipStart;
+            if (togetherTime > 0) {
+                document.getElementById('tog-days').innerText = Math.floor(togetherTime / (1000 * 60 * 60 * 24));
+                document.getElementById('tog-hours').innerText = Math.floor((togetherTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById('tog-minutes').innerText = Math.floor((togetherTime % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById('tog-seconds').innerText = Math.floor((togetherTime % (1000 * 60)) / 1000);
+            }
+        }
+        setInterval(updateTimers, 1000);
+        updateTimers();
+
+        /* ================= 6. POLAROID FILE UPLOADER ================= */
+        function handleImageUpload(event, previewId) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById(previewId).src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        /* ================= 7. EVASIVE "NO" BUTTON GAME LOGIC ================= */
+        const noBtn = document.getElementById('no-btn');
+        const yesBtn = document.getElementById('yes-btn');
+        const gameContainer = document.getElementById('game-container');
+
+        const noTexts = [
+            "Are you sure?",
+            "Nice try! 😜",
+            "Think again! 🤔",
+            "You can't catch me!",
+            "Wrong choice! 🙈",
+            "Yash loves you too much!",
+            "Just click YES! 💖"
+        ];
+        let dodgeCount = 0;
+        let yesScale = 1;
+
+        function dodgeNoButton() {
+            const containerRect = gameContainer.getBoundingClientRect();
+            const btnRect = noBtn.getBoundingClientRect();
+
+            // Calculate safe bounds inside container
+            const maxX = containerRect.width - btnRect.width - 20;
+            const maxY = containerRect.height - btnRect.height - 20;
+
+            const randomX = Math.max(10, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(10, Math.floor(Math.random() * maxY));
+
+            noBtn.style.left = `${randomX}px`;
+            noBtn.style.top = `${randomY}px`;
+
+            // Scale down "No" button slightly
+            const noScale = Math.max(0.6, 1 - dodgeCount * 0.05);
+            noBtn.style.transform = `scale(${noScale})`;
+
+            // Cycle text
+            noBtn.innerText = noTexts[dodgeCount % noTexts.length];
+            dodgeCount++;
+
+            // Grow "Yes" button smoothly
+            yesScale += 0.12;
+            yesBtn.style.transform = `scale(${yesScale})`;
+        }
+
+        noBtn.addEventListener('mouseenter', dodgeNoButton);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            dodgeNoButton();
+        });
+
+        /* ================= 8. VICTORY REWARD & CONFETTI ================= */
+        function triggerVictory() {
+            // Launch Confetti Explosion
+            confetti({
+                particleCount: 120,
+                spread: 80,
+                origin: { y: 0.6 }
+            });
+
+            // Unlock Secret Gift Box & Letter
+            const secretSec = document.getElementById('secret-section');
+            secretSec.classList.remove('hidden');
+            setTimeout(() => {
+                secretSec.scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+        }
+
+        /* ================= 9. REDEEMABLE LOVE COUPONS ================= */
+        function redeemCoupon(couponCard) {
+            const statusTag = couponCard.querySelector('.coupon-status');
+            if (statusTag.innerText === 'REDEEMED!') return;
+
+            // Heart explosion animation
+            for (let i = 0; i < 6; i++) {
+                const heart = document.createElement('span');
+                heart.innerText = '💖';
+                heart.className = 'heart-pop';
+                heart.style.left = `${Math.random() * 80 + 10}%`;
+                heart.style.top = `${Math.random() * 80 + 10}%`;
+                couponCard.appendChild(heart);
+                setTimeout(() => heart.remove(), 800);
+            }
+
+            // Transform Coupon Style
+            couponCard.classList.add('bg-rosepink/10', 'border-rosepink');
+            statusTag.innerText = 'REDEEMED!';
+            statusTag.className = 'coupon-status text-xs font-bold bg-green-500 text-white px-3 py-1.5 rounded-full shadow';
+        }
+
+        /* ================= 10. BIRTHDAY CAKE CANDLE BLOW ================= */
+        let blownCandles = 0;
+        function blowCandle(candleElem) {
+            const flame = candleElem.querySelector('.flame');
+            if (flame && flame.style.display !== 'none') {
+                flame.style.display = 'none';
+                blownCandles++;
+
+                // Sparkle burst effect
+                confetti({
+                    particleCount: 25,
+                    spread: 40,
+                    origin: { y: 0.5 }
+                });
+
+                if (blownCandles === 3) {
+                    document.getElementById('wish-status').innerText = 'All candles blown! Your wish is sent! ✨';
+                    setTimeout(showWishModal, 600);
+                } else {
+                    document.getElementById('wish-status').innerText = `${3 - blownCandles} candles left! Keep blowing!`;
+                }
+            }
+        }
+
+        function showWishModal() {
+            const modal = document.getElementById('wish-modal');
+            const content = document.getElementById('wish-modal-content');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 50);
+        }
+
+        function closeWishModal() {
+            const modal = document.getElementById('wish-modal');
+            const content = document.getElementById('wish-modal-content');
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+    </script>
+</body>
+</html>
